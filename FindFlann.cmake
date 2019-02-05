@@ -1,0 +1,63 @@
+###############################################################################
+# Find Flann
+#
+# This sets the following variables:
+# FLANN_FOUND - True if FLANN was found.
+# FLANN_INCLUDE_DIRS - Directories containing the FLANN include files.
+# FLANN_LIBRARIES - Libraries needed to use FLANN.
+# FLANN_DEFINITIONS - Compiler flags for FLANN.
+
+find_package(PkgConfig)
+###pkg_check_modules(PC_FLANN flann)
+###set(FLANN_DEFINITIONS ${PC_FLANN_CFLAGS_OTHER})
+
+###find_path(FLANN_INCLUDE_DIR flann/flann.hpp
+###    HINTS ${PC_FLANN_INCLUDEDIR} ${PC_FLANN_INCLUDE_DIRS})
+
+###find_library(FLANN_LIBRARY flann
+###    HINTS ${PC_FLANN_LIBDIR} ${PC_FLANN_LIBRARY_DIRS})
+
+###set(FLANN_INCLUDE_DIRS ${FLANN_INCLUDE_DIR})
+###set(FLANN_LIBRARIES ${FLANN_LIBRARY})
+
+###include(FindPackageHandleStandardArgs)
+###find_package_handle_standard_args(Flann DEFAULT_MSG
+###    FLANN_LIBRARY FLANN_INCLUDE_DIR)
+
+
+
+#zy solution
+find_path(FLANN_INCLUDE_DIR
+            NAMES
+            flann.hpp
+            PATHS
+            /usr/local/include/flann
+            NO_DEFAULT_PATH
+            )
+
+find_library(FLANN_LIBRARY
+            NAMES
+            flann
+            PATHS
+            /usr/local/lib
+            NO_DEFAULT_PATH
+            )
+find_library(FLANN_CPP_LIBRARY
+            NAMES
+            flann_cpp
+            PATHS
+            /usr/local/lib
+            NO_DEFAULT_PATH
+            )
+
+if (FLANN_LIBRARY AND FLANN_CPP_LIBRARY AND FLANN_INCLUDE_DIR)
+       set(FLANN_FOUND TRUE)
+endif()
+
+set(FLANN_INCLUDE_DIRS ${FLANN_INCLUDE_DIR})
+set(FLANN_LIBRARIES ${FLANN_LIBRARY} ${FLANN_CPP_LIBRARY})
+message("zzzzzzzFLANN_LIBRARIES=\n ${FLANN_LIBRARIES}")
+message("yyyyyyyFLANN_INCLUDE_DIRS=\n ${FLANN_INCLUDE_DIRS}")
+
+mark_as_advanced(FLANN_LIBRARY FLANN_INCLUDE_DIR)
+
